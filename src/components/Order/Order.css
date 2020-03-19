@@ -1,0 +1,38 @@
+.Order {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    z-index: 100;
+    color: #6d3909;
+    background-color: white;
+    margin:0 auto;
+    text-align: center;
+    box-sizing: block;
+}
+
+.Logo1 {
+    z-index: 1;
+    opacity: 0.1;
+    position: fixed;
+    width: 100%;
+    margin: 20% auto;
+    top: -20%;
+}
+
+.Logo2 {
+    z-index: 1;
+    opacity: 0.1;
+    position: fixed;
+    width: 100%;
+    margin: 20% auto;
+    top: 10%;
+}
+
+.Logo3 {
+    z-index: 1;
+    opacity: 0.1;
+    position: fixed;
+    width: 100%;
+    margin: 20% auto;
+    top: 40%;
+}

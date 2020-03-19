@@ -1,0 +1,112 @@
+.Crust {
+    height: 7%;
+    width: 90%;
+    background: linear-gradient(#F08E4A, #e27b36);
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: inset -15px 0 #c15711;
+    margin: 2% auto;
+} 
+
+.Meat {
+    width: 80%;
+    height: 20%;
+    margin: 2% auto;
+}
+
+.MeatInner1 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#7f3608, #702e05);
+  border-radius: 15px;
+  transform: rotate(20deg);
+  box-shadow: inset -15px 0 #924512;
+}
+
+.MeatInner2 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#7f3608, #702e05);
+  border-radius: 15px;
+  transform: rotate(50deg);
+  box-shadow: inset -15px 0 #924512;
+}
+
+.MeatInner3 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#7f3608, #702e05);
+  border-radius: 15px;
+  transform: rotate(-20deg);
+  box-shadow: inset -15px 0 #924512;
+}
+
+.MeatInner4 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#7f3608, #702e05);
+  border-radius: 15px;
+  box-shadow: inset -15px 0 #924512;
+  transform: rotate(-60deg);
+}
+
+.Cheese {
+    width: 85%;
+    height: 4.5%;
+    margin: 2% auto;
+    background: linear-gradient(#f4d004, #d6bb22);
+    border-radius: 20px;
+}
+
+.Veggies {
+    width: 85%;
+    height: 20%;
+    margin: 2% auto;
+}
+
+.VeggiesInner1 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#228c1d, #91ce50);
+  border-radius: 20px;
+  transform: rotate(-60deg);
+}
+
+.VeggiesInner2 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#228c1d, #91ce50);
+  border-radius: 20px;
+  transform: rotate(-20deg);
+}
+
+.VeggiesInner3 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#228c1d, #91ce50);
+  border-radius: 20px;
+  transform: rotate(50deg);
+}
+
+.VeggiesInner4 {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background: linear-gradient(#228c1d, #91ce50);
+  border-radius: 20px;
+  transform: rotate(20deg);
+}
+
+.ChillySauce {
+    width: 85%;
+    height: 3%;
+    border-radius: 20px;
+    background: linear-gradient(#bf3813, #c45e38);
+    margin: 2% auto;
+}

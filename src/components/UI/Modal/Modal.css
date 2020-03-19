@@ -1,0 +1,49 @@
+.Modal {
+    position: fixed;
+    z-index: 500;
+    background-color: #d6c0a8;
+    width: 75%;
+    color: #6d3909;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #6d3909;
+    text-align: center;
+    padding: 0 8px;
+    left: 13%;
+    top: 4%;
+    box-sizing: border-box;
+    transition: all 0.3s ease-out;
+}
+
+.Logo1 {
+    z-index: -1;
+    opacity: 0.1;
+    position: fixed;
+    width: 100%;
+    margin: 20% auto;
+    top: -10%;
+}
+
+.Logo2 {
+    z-index: -1;
+    opacity: 0.1;
+    position: fixed;
+    width: 100%;
+    margin: 20% auto;
+    top: 20%;
+}
+
+.Logo3 {
+    z-index: -1;
+    opacity: 0.1;
+    position: fixed;
+    width: 100%;
+    margin: 20% auto;
+    top: 50%;
+}
+
+@media (min-width: 600px) {
+    .Modal {
+        width: 500px;
+        left: calc(50% - 250px);
+    }
+}
