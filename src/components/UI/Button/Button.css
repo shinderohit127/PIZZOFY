@@ -6,7 +6,7 @@
     cursor: pointer;
     font: inherit;
     padding: 0 3px;
-    margin: 15px 5px;
+    margin: 10px 5px;
     font-weight: bold;
 }
 
@@ -19,6 +19,17 @@
     color: #5C9210;
 }
 
+.Button:disabled {
+    color: #ccccccb7;
+    cursor: not-allowed;
+}
+
 .Danger {
     color: #944317;
+}
+
+.Close {
+    color: gray; 
+    padding: 20px; 
+    font-size: 20px;
 }

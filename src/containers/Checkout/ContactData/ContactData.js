@@ -1,68 +1,222 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from './ContactData.css';
 import axios from '../../../axios-orders';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
+import * as actions from '../../../store/actions/index';
 
 class ContactData extends Component {
     state = {
-        name: '',
-        email: '',
-        number:'',
-        address: {
-            area: '',
-            bldgNo: '',
-            zipCode: ''
-        },
-        loading: false
-    }
-
-    orderHandler = (event) => {
-        event.preventDefault();
-        const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
-            customer: {
-                name: 'Rohit',
-                address: {
-                    bldgNo: '65',
-                    zipCode: '400089',
-                    area: 'tilak nagar'
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
                 },
-                email: 'shinderohit127@gmail.com'
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
-            paymentMethod: 'CoD'
-        }
-        axios.post('/orders.json', order)
-        .then(response => {
-            this.setState({loading: false});
-            this.props.history.push('/');
-        })
-        .catch(error => {
-            this.setState({loading: false});
-        });
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP Code'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 6,
+                    isNumeric: true
+                },
+                valid: false,
+                touched: false
+            },
+            contactNumber: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Contact Number'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 10,
+                    isNumeric: true
+                },
+                valid: false,
+                touched: false
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your E-Mail'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    isEmail: true
+                },
+                valid: false,
+                touched: false
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'CoD', displayValue: 'Cash On Delivery'},
+                        {value: 'UPI', displayValue: 'UPI'},
+                        {value: 'net-banking', displayValue: 'Net Banking'}
+                    ]
+                },
+                value: 'Cod',
+                validation: {},
+                valid: true
+            }
+        },
+        formIsValid: false
     }
 
-    render() {
+    orderHandler = ( event ) => {
+        event.preventDefault();
+  
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+        }
+        const order = {
+            ingredients: this.props.ings,
+            price: this.props.price,
+            orderData: formData
+        }
+
+        this.props.onOrderPizza(order, this.props.token);
+        
+    }
+
+    checkValidity(value, rules) {
+        let isValid = true;
+        if (!rules) {
+            return true;
+        }
+        
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        return isValid;
+    }
+
+    inputChangedHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        const updatedFormElement = { 
+            ...updatedOrderForm[inputIdentifier]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.touched = true;
+        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
+    }
+
+    render () {
+        const formElementsArray = [];
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
         let form = (
-            <form>
-                <input className={classes.Input} type="text" placeholder="Your name" name="name"/>
-                <input className={classes.Input}  type="string" placeholder="Your email" name="email"/>
-                <input className={classes.Input}  type="string" placeholder="Your Contact number" name="Contact Number"/>
-                <input className={classes.Input}  type="string" placeholder="Your postal code" name="Zip code"/>
-                <Button btnType="Success" clicked={this.orderHandler}>Place Your Order!</Button>
+            <form onSubmit={this.orderHandler}>
+                {formElementsArray.map(formElement => (
+                    <Input 
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
+                        touched={formElement.config.touched}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                ))}
+                <Button btnType="Success" disabled={!this.state.formIsValid}>PLACE YOUR ORDER!</Button>
             </form>
         );
-        if (this.state.loading) {
+        if ( this.props.loading ) {
             form = <Spinner />;
         }
         return (
             <div className={classes.ContactData}>
-                <h4>Enter your contact details:</h4>
+                <h4>Enter your Contact Data</h4>
                 {form}
             </div>
         );
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ings: state.pizzaBuilder.ingredients,
+        price: state.pizzaBuilder.totalPrice,
+        loading: state.order.loading,
+        token: state.auth.token
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderPizza: (orderData, token) => dispatch(actions.purchasePizza(orderData, token))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

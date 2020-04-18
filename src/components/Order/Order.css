@@ -11,7 +11,7 @@
 }
 
 .Logo1 {
-    z-index: 1;
+    z-index: -1;
     opacity: 0.1;
     position: fixed;
     width: 100%;
@@ -20,7 +20,7 @@
 }
 
 .Logo2 {
-    z-index: 1;
+    z-index: -1;
     opacity: 0.1;
     position: fixed;
     width: 100%;
@@ -29,7 +29,7 @@
 }
 
 .Logo3 {
-    z-index: 1;
+    z-index: -1;
     opacity: 0.1;
     position: fixed;
     width: 100%;

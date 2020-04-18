@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import pizzaLogo from '../../../assets/images/pizzalogo.png';
 import classes from './Modal.css';
-import Hcomp from '../../../hoc/Hcomp'; 
+import Hcomp from '../../../hoc/Hcomp';
 import Backdrop from '../Backdrop/Backdrop';
 
 class Modal extends Component {
@@ -10,7 +10,7 @@ class Modal extends Component {
         return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
-    UNSAFE_componentWillUpdate () {
+    componentWillUpdate () {
         console.log('[Modal] WillUpdate');
     }
 
@@ -18,7 +18,8 @@ class Modal extends Component {
         return (
             <Hcomp>
                 <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
-                <div className={classes.Modal}
+                <div
+                    className={classes.Modal}
                     style={{
                         transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
                         opacity: this.props.show ? '1' : '0'
